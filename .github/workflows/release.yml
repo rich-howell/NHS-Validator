@@ -1,4 +1,4 @@
-name: 🚀 Build & Release HL7 Forge
+name: 🚀 Build & Release NHS Validator
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
 
       - name: 🏗️ Publish self-contained executable
         run: |
-          cd src/HL7Forge.Gui
+          cd NHS-Validator
           dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
 
       - name: 🔢 Get version from version.txt
@@ -37,8 +37,8 @@ jobs:
       - name: 🗜️ Package published build
         run: |
           $zipName = "HL7-Forge-v${{ steps.version.outputs.version }}.zip"
-          $publishDir = "src/HL7Forge.Gui/bin/Release/net8.0-windows/win-x64/publish"
-          Compress-Archive -Path "$publishDir/*" -DestinationPath "src/HL7Forge.Gui/bin/Release/$zipName"
+          $publishDir = "NHS-Validator/bin/Release/net8.0-windows/win-x64/publish"
+          Compress-Archive -Path "$publishDir/*" -DestinationPath "NHS-Validator/bin/Release/$zipName"
           Write-Host "Created archive: $zipName"
 
       - name: 📝 Generate release notes
@@ -67,11 +67,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: "HL7 Forge v${{ steps.version.outputs.version }}"
+          name: "NHS Validator v${{ steps.version.outputs.version }}"
           draft: false
           prerelease: false
           body: |
-            ## 🚀 HL7 Forge v${{ steps.version.outputs.version }}
+            ## 🚀 NHS Validator v${{ steps.version.outputs.version }}
 
             🧠 Built with .NET 8  
             💾 Self-contained executable — no install required  
@@ -81,4 +81,4 @@ jobs:
 
             _Built automatically on merge to main._
           files: |
-            src/HL7Forge.Gui/bin/Release/HL7-Forge-v${{ steps.version.outputs.version }}.zip
+            NHS-Validator/bin/Release/HL7-Forge-v${{ steps.version.outputs.version }}.zip
