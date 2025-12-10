@@ -7,3 +7,11 @@
 C# Windows Forms app that provides utilities for NHS Numbers, including validity checks, normalisation, and generation.
 
 ![Screenshot of the main application ui](./images/app-screenshot.png)
+
+## Number Generation
+
+NHS Number generation should only be used in a test situation, numbers should never be auto generated for use in production as these are centrally controlled and issued.
+
+### Credit
+
+This application is based off the work that [UK-FCI](https://github.com/uk-fci/nhs-number) have done and uses that logic built into a C# Windows forms application to provide tools for NHS Number validation and generation. 
