@@ -1,7 +1,7 @@
-﻿using NHS_Validator.NHS.Regions;
-using NHS_Validator.NHS.Validation;
+﻿using NHSValidator.NHS.Regions;
+using NHSValidator.NHS.Validation;
 
-namespace NHS_Validator.NHS.Testing
+namespace NHSValidator.NHS.Testing
 {
     /// <summary>
     /// Generates valid or invalid NHS numbers for testing purposes ONLY.

@@ -1,4 +1,4 @@
-﻿namespace NHS_Validator.NHS.Regions
+﻿namespace NHSValidator.NHS.Regions
 {
     public abstract class Region
     {

@@ -1,11 +1,11 @@
-﻿using NHS_Validator.NHS;
-using NHS_Validator.NHS.Testing;
+using NHSValidator.NHS;
+using NHSValidator.NHS.Testing;
 
-namespace NHS_Validator
+namespace NHSValidator
 {
     public partial class Main : Form
     {
-        private readonly ToolTip _toolTip = new ToolTip();
+        private readonly ToolTip _toolTip = new();
 
         public Main()
         {
@@ -42,27 +42,27 @@ namespace NHS_Validator
                 "Generates test NHS numbers using the Modulus 11 checksum."
             );
 
-            this.ActiveControl = txtNHSNumber;
+            ActiveControl = txtNHSNumber;
 
         }
 
         private void btnCheckNHS_Click(object sender, EventArgs e)
         {
             string nhsNumber = txtNHSNumber.Text;
-            if (!NHSNumber.TryParse(nhsNumber, out var nhs))
+            if (!NHSNumber.TryParse(nhsNumber, out NHSNumber? nhs))
             {
-                MessageBox.Show("The NHS Number " + nhsNumber + " is not valid");
+                _ = MessageBox.Show(text: $"The NHS Number {nhs.NormalisedValue} is not valid");
                 return;
             }
             else
             {
-                MessageBox.Show("NHS Number " + nhsNumber + " is valid");
+                _ = MessageBox.Show("NHS Number " + nhsNumber + " is valid");
             }
         }
 
         private void txtNHSNumber_TextChanged(object sender, EventArgs e)
         {
-            var digitCount = txtNHSNumber.Text.Count(char.IsDigit);
+            int digitCount = txtNHSNumber.Text.Count(char.IsDigit);
 
             if (digitCount < 10)
             {
@@ -70,16 +70,11 @@ namespace NHS_Validator
                 return;
             }
 
-            var normalised = new string(txtNHSNumber.Text.Where(char.IsDigit).ToArray());
+            string normalised = new(txtNHSNumber.Text.Where(char.IsDigit).ToArray());
 
-            if (NHSNumber.TryParse(txtNHSNumber.Text, out var nhs))
-            {
-                lblStatus.Text = $"{nhs.NormalisedValue} – valid NHS number";
-            }
-            else
-            {
-                lblStatus.Text = $"{normalised} – invalid NHS number";
-            }
+            lblStatus.Text = NHSNumber.TryParse(txtNHSNumber.Text, out NHSNumber? nhs)
+                ? $"{nhs.NormalisedValue} – valid NHS number"
+                : $"{normalised} – invalid NHS number";
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -89,7 +84,7 @@ namespace NHS_Validator
 
             if (quantity == 0)
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     "Please enter a valid qty for generation",
                     "Generation Error",
                     MessageBoxButtons.OK,
@@ -100,7 +95,7 @@ namespace NHS_Validator
 
             bool valid = (bool)cbValidNumbers.SelectedValue;
 
-            var numbers = NHSNumberGenerator.Generate(
+            IReadOnlyList<string> numbers = NHSNumberGenerator.Generate(
                 valid: valid,
                 quantity: quantity
             );
@@ -126,15 +121,31 @@ namespace NHS_Validator
             if (rtbNumbers.Text.Length > 0)
             {
                 Clipboard.SetText(rtbNumbers.Text);
-                MessageBox.Show("Numbers copied\r\nRemember, these should only be used for testing","Numbers Copied",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            } else
+                _ = MessageBox.Show("Numbers copied\r\nRemember, these should only be used for testing", "Numbers Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
             {
-                MessageBox.Show(
+                _ = MessageBox.Show(
                     "There are no generated numbers to copy yet.",
                     "Nothing to Copy",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
         }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e) => exitApplication();
+
+        private static void exitApplication()
+        {
+            if (Application.MessageLoop)
+            {
+                Application.Exit();
+            }
+            else
+            {
+                Environment.Exit(1);
+            }
+        }
+
     }
 }

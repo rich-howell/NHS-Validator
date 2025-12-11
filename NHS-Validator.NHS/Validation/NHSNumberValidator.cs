@@ -1,6 +1,6 @@
-﻿using NHS_Validator.NHS.Regions;
+﻿using NHSValidator.NHS.Regions;
 
-namespace NHS_Validator.NHS.Validation
+namespace NHSValidator.NHS.Validation
 {
     internal static class NHSNumberValidator
     {

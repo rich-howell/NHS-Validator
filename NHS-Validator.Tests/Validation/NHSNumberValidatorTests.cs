@@ -1,7 +1,7 @@
-﻿using NHS_Validator.NHS.Validation;
-using NHS_Validator.NHS.Regions;
+﻿using NHSValidator.NHS.Validation;
+using NHSValidator.NHS.Regions;
 using Xunit;
-using NHS_Validator.NHS;
+using NHSValidator.NHS;
 
 namespace PDS_Tracer.NHS.Tests.Validation
 {

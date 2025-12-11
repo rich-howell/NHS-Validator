@@ -1,4 +1,4 @@
-﻿namespace NHS_Validator
+﻿namespace NHSValidator
 {
     partial class Main
     {
@@ -158,8 +158,10 @@
             ClientSize = new Size(722, 333);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            MaximizeBox = false;
             Name = "Main";
             Text = "NHS Number Validator";
+            FormClosing += Main_FormClosing;
             Load += Main_Load;
             ((System.ComponentModel.ISupportInitialize)numQty).EndInit();
             groupBox1.ResumeLayout(false);

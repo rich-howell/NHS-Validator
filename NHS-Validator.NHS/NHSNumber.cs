@@ -1,8 +1,8 @@
-﻿using NHS_Validator.NHS.Formatting;
-using NHS_Validator.NHS.Regions;
-using NHS_Validator.NHS.Validation;
+using NHSValidator.NHS.Formatting;
+using NHSValidator.NHS.Regions;
+using NHSValidator.NHS.Validation;
 
-namespace NHS_Validator.NHS
+namespace NHSValidator.NHS
 {
     public sealed class NHSNumber
     {
@@ -29,12 +29,16 @@ namespace NHS_Validator.NHS
         {
             nhsNumber = null;
 
-            var normalised = NHSNumberFormatter.Standardise(input);
+            string? normalised = NHSNumberFormatter.Standardise(input);
             if (normalised is null)
+            {
                 return false;
+            }
 
             if (!NHSNumberValidator.IsValid(normalised, region))
+            {
                 return false;
+            }
 
             nhsNumber = new NHSNumber(normalised, input);
             return true;

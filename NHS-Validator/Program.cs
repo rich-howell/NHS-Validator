@@ -1,4 +1,4 @@
-namespace NHS_Validator
+namespace NHSValidator
 {
     internal static class Program
     {
